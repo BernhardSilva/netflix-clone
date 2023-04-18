@@ -52,12 +52,12 @@ const Auth = () => {
 							/>
 						</div>
 						<button className='bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition'>
-							{variant === 'login' ? 'Login' : 'Sign up'}
+							Login
 						</button>
 						<p onClick={toggleVariant} className='text-neutral-500 mt-12'>
-							{variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
+							First time using Netflix?
 							<span className='text-white ml-1 hover:underline cursor-pointer'>
-								{variant === 'login' ? 'Create an account' : 'Login'}
+								Create an account
 							</span>
 						</p>
 					</div>
