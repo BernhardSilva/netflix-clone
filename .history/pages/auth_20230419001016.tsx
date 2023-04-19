@@ -16,22 +16,12 @@ const Auth = () => {
 	const register = useCallback(async () => {
 		try {
 			await axios.post('/api/register', {
-				email,
-				name,
-				password
+				email, name, password
 			})
 		} catch (error) {
 			console.log(error)
 		}
 	},[email, name, password])
-
-	// const login = useCallback(async () => {
-	// 	try {
-	// 		await signIn('credentials', email, password, redirect: false, callbackUr)
-	// 	} catch (error) {
-	// 		console.log(error)	
-	// 	}
-	// }, [])
 
 	return (
 		<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">

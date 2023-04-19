@@ -16,22 +16,12 @@ const Auth = () => {
 	const register = useCallback(async () => {
 		try {
 			await axios.post('/api/register', {
-				email,
-				name,
-				password
+				email, name, password
 			})
 		} catch (error) {
 			console.log(error)
 		}
 	},[email, name, password])
-
-	// const login = useCallback(async () => {
-	// 	try {
-	// 		await signIn('credentials', email, password, redirect: false, callbackUr)
-	// 	} catch (error) {
-	// 		console.log(error)	
-	// 	}
-	// }, [])
 
 	return (
 		<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -43,7 +33,7 @@ const Auth = () => {
 				<div className='flex justify-center'>
 					<div className='bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full'>
 						<h2 className='text-white text-4xl mb-8 font-semibold'>
-							{variant === 'login' ? 'Sign in' : 'Register'}
+							{variant === 'login' ? 'Sign in' : 'Tu también me gustas ñoña'}
 						</h2>
 						<div className='flex flex-col gap-4'>
 							{variant === 'register' && (
