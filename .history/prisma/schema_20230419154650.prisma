@@ -52,7 +52,7 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model VerificationToken {
+model VerificacionToken {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token String @unique
