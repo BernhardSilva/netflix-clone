@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
-import Button from '@/components/Button';
 
 const Auth = () => {
 	const router = useRouter();
@@ -23,7 +22,6 @@ const Auth = () => {
 
 	const login = useCallback(async () => {
 		try {
-			setLoading(true);
 			await signIn('credentials', {
 				email,
 				password,
@@ -31,25 +29,20 @@ const Auth = () => {
 				callbackUrl: '/'
 			});
 			router.push('/');
-			setLoading(false);
 		} catch (error) {
-			setLoading(false);
 			console.log(error);
 		}
 	}, [email, password, router]);
 
 	const register = useCallback(async () => {
 		try {
-			setLoading(true);
 			await axios.post('/api/register', {
 				email,
 				name,
 				password
 			});
 			login();
-			setLoading(false);
 		} catch (error) {
-			setLoading(false);
 			console.log(error);
 		}
 	}, [email, name, password, login]);
@@ -93,19 +86,16 @@ const Auth = () => {
 								value={password}
 							/>
 						</div>
-						<Button
-							id={'auth-btn'}
-							label={variant === 'login' ? 'Login' : 'Register'}
-							className={
-								'bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition'
-							}
+						<button
 							onClick={variant === 'login' ? login : register}
-							loading={loading}
-						/>
+							className='bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition'
+						>
+							{variant === 'login' ? 'Login' : 'Sign up'}
+						</button>
 
 						<div className='flex flex-row items-center gap-4 mt-8 justify-center'>
 							<div
-								onClick={() => signIn('google', { callbackUrl: '/' })}
+								onClick={()=>signIn('google', {callbackUrl: '/'})}
 								className='
 								w-10
 								h-10
@@ -119,10 +109,10 @@ const Auth = () => {
 								transition
 								'
 							>
-								<FcGoogle size={30} />
+								<FcGoogle size={30}/>
 							</div>
 							<div
-								onClick={() => signIn('github', { callbackUrl: '/' })}
+								onClick={()=>signIn('github', {callbackUrl: '/'})}
 								className='
 								w-10
 								h-10
@@ -136,7 +126,7 @@ const Auth = () => {
 								transition
 								'
 							>
-								<FaGithub size={30} />
+								<FaGithub size={30}/>
 							</div>
 						</div>
 
