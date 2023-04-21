@@ -13,10 +13,10 @@ const Button: React.FC<ButtonProps> = ({ id, className, loading, onClick, label 
 		<button id={id} onClick={onClick} className={className} disabled={loading}>
 			{label}
 			<span>
-				{loading && (
+				{!loading && (
 					<svg
 						aria-hidden='true'
-						className='ml-2 mb-1 inline w-5 h-5 mr-2 text-gray-200 animate-spin dark:text-white-600 fill-red-600'
+						className='ml-2 inline w-5 h-5 mr-2 text-gray-200 animate-spin dark:text-white-600 fill-red-600'
 						viewBox='0 0 100 101'
 						fill='none'
 						xmlns='http://www.w3.org/2000/svg'

@@ -1,23 +1,23 @@
-import React from 'react';
+import React from 'react'
 
 interface InputProps {
-	id: string;
-	onChange: any;
-	value: string;
-	label: string;
-	type?: string;
-	disabled?: boolean;
+    id: string;
+    onChange: any;
+    value: string;
+    label: string;
+    type?: string;
+    loading?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, disabled }) => {
+const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, loading }) => {
 	return (
 		<div className='relative'>
 			<input
 				id={id}
-				value={value}
-				type={type}
-				onChange={onChange}
-				disabled={disabled}
+                value={value}
+                type={type}
+                onChange={onChange}
+                loading={loading}
 				className='
                 block
                 rounded-md

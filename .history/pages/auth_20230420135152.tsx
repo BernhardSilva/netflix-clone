@@ -56,7 +56,7 @@ const Auth = () => {
 
 	return (
 		<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
-			<div className={`bg-black w-full h-full lg:bg-opacity-50 ${loading && 'pointer-events-none opacity-75'}`}>
+			<div className='bg-black w-full h-full lg:bg-opacity-50'>
 				<nav className='px-12 py-5'>
 					<img src='/images/logo.png' alt='logo' className='h-12'></img>
 				</nav>
@@ -74,6 +74,7 @@ const Auth = () => {
 									id='name'
 									type='name'
 									value={name}
+									disabled={loading}
 								/>
 							)}
 
@@ -83,6 +84,7 @@ const Auth = () => {
 								id='email'
 								type='email'
 								value={email}
+								disabled={loading}
 							/>
 
 							<Input
@@ -91,6 +93,7 @@ const Auth = () => {
 								id='password'
 								type='password'
 								value={password}
+								disabled={loading}
 							/>
 						</div>
 						<Button

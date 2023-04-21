@@ -74,6 +74,7 @@ const Auth = () => {
 									id='name'
 									type='name'
 									value={name}
+									// disabled={loading}
 								/>
 							)}
 
@@ -83,6 +84,7 @@ const Auth = () => {
 								id='email'
 								type='email'
 								value={email}
+								// disabled={loading}
 							/>
 
 							<Input
@@ -91,6 +93,7 @@ const Auth = () => {
 								id='password'
 								type='password'
 								value={password}
+								// disabled={loading}
 							/>
 						</div>
 						<Button

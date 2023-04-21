@@ -10,10 +10,10 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ id, className, loading, onClick, label }) => {
 	return (
-		<button id={id} onClick={onClick} className={className} disabled={loading}>
+		<button id={id} onClick={onClick} className={className} disabled={!loading}>
 			{label}
 			<span>
-				{loading && (
+				{!loading && (
 					<svg
 						aria-hidden='true'
 						className='ml-2 mb-1 inline w-5 h-5 mr-2 text-gray-200 animate-spin dark:text-white-600 fill-red-600'
