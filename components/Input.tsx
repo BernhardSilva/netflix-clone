@@ -1,16 +1,66 @@
 import React from 'react';
+import { useState } from 'react';
 
 interface InputProps {
 	id: string;
-	onChange: any;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
 	label: string;
 	type?: string;
 	disabled?: boolean;
+	required?: boolean;
+	validation?: (value: string) => boolean;
+	errorMessage?: string;
 }
 
-const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, disabled }) => {
-  
+const Input: React.FC<InputProps> = ({
+	id,
+	onChange,
+	value,
+	label,
+	type = 'text',
+	disabled = false,
+	required = false,
+	validation,
+	errorMessage = 'Invalid input'
+}) => {
+	const [isTouched, setIsTouched] = useState(false);
+
+	const hasError = isTouched && (!required || !validation?.(value));
+
+	const inputClassNames = `
+    block
+    rounded-md
+    px-6
+    pt-6
+    pb-1
+    w-full
+    text-white
+    bg-neutral-700
+    appearance-none
+    focus:outline-none
+    focus:ring-0
+    peer
+    ${hasError ? 'invalid:border-b-1' : ''}
+  `;
+
+	const labelClassNames = `
+    absolute
+    text-zinc-400
+    duration-150 
+    transform 
+    -translate-y-3 
+    scale-75 
+    top-4 
+    z-10 
+    origin-[0]
+    left-6
+    peer-placeholder-shown:scale-100 
+    peer-placeholder-shown:translate-y-0 
+    peer-focus:scale-75
+    peer-focus:-translate-y-3
+  `;
+
 	return (
 		<div className='relative'>
 			<input
@@ -19,46 +69,15 @@ const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, disable
 				type={type}
 				onChange={onChange}
 				disabled={disabled}
-				className='
-                block
-                rounded-md
-                px-6
-                pt-6
-                pb-1
-                w-full
-                text-md
-              text-white
-              bg-neutral-700
-                appearance-none
-                focus:outline-none
-                focus:ring-0
-                peer
-                invalid:border-b-1
-                '
+				required={required}
+				className={inputClassNames}
 				placeholder=' '
+				onBlur={() => setIsTouched(true)}
 			/>
-			<label
-				className='
-                absolute 
-                text-md
-                text-zinc-400
-                duration-150 
-                transform 
-                -translate-y-3 
-                scale-75 
-                top-4 
-                z-10 
-                origin-[0] 
-                left-6
-                peer-placeholder-shown:scale-100 
-                peer-placeholder-shown:translate-y-0 
-                peer-focus:scale-75
-                peer-focus:-translate-y-3
-                '
-				htmlFor={id}
-			>
+			<label className={labelClassNames} htmlFor={id}>
 				{label}
 			</label>
+			{hasError && <div className='mt-1 ml-2 text-sm text-orange-500'>{errorMessage}</div>}
 		</div>
 	);
 };
