@@ -10,6 +10,7 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, disabled }) => {
+  
 	return (
 		<div className='relative'>
 			<input

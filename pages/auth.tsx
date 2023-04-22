@@ -30,8 +30,8 @@ const Auth = () => {
 				redirect: false,
 				callbackUrl: '/'
 			});
-			router.push('/');
 			setLoading(false);
+			router.push('/');
 		} catch (error) {
 			setLoading(false);
 			console.log(error);
@@ -56,7 +56,11 @@ const Auth = () => {
 
 	return (
 		<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
-			<div className={`bg-black w-full h-full lg:bg-opacity-50 ${loading && 'pointer-events-none opacity-75'}`}>
+			<div
+				className={`bg-black w-full h-full lg:bg-opacity-50 ${
+					loading && 'pointer-events-none opacity-75'
+				}`}
+			>
 				<nav className='px-12 py-5'>
 					<img src='/images/logo.png' alt='logo' className='h-10 lg:h-12'></img>
 				</nav>
@@ -72,7 +76,7 @@ const Auth = () => {
 									label='Name'
 									onChange={(ev: any) => setName(ev.target.value)}
 									id='name'
-									type='name'
+									type='text'
 									value={name}
 								/>
 							)}
