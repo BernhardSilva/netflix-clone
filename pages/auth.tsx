@@ -171,7 +171,9 @@ const Auth = () => {
 						<Button
 							id={'auth-btn'}
 							label={variant === 'login' ? 'Login' : 'Register'}
-							className={`bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition ${variant === 'login' ? isLogin() : isRegister()}`}
+							className={`bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition ${
+								variant === 'login' ? isLogin() : isRegister()
+							}`}
 							onClick={variant === 'login' ? login : register}
 							loading={loading}
 						/>
