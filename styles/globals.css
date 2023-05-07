@@ -13,8 +13,3 @@ body {
 html {
   @apply h-full;
 }
-
-.hybrid-login-wrapper .site-footer-wrapper {
-  background: rgba(0,0,0,.75);
-  margin-top: 0;
-}

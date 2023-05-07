@@ -2,7 +2,6 @@ import Input from '@/components/Input';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
 
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
@@ -10,7 +9,6 @@ import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 
 const Auth = () => {
-	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
@@ -69,8 +67,7 @@ const Auth = () => {
 			const res = await signIn('credentials', {
 				email,
 				password,
-				redirect: false,
-				callbackUrl: '/'
+				callbackUrl: '/profiles'
 			});
 			if (res?.error) {
 				setLoading(false);
@@ -78,13 +75,12 @@ const Auth = () => {
 				console.log(res.error);
 			}
 			setLoading(false);
-			router.push('/');
 		} catch (error: any) {
 			setLoading(false);
 			setErrorMessage(error.message);
 			console.log(error);
 		}
-	}, [email, password, router]);
+	}, [email, password]);
 
 	const register = useCallback(async () => {
 		try {
@@ -180,7 +176,7 @@ const Auth = () => {
 
 						<div className='flex flex-row items-center gap-4 mt-8 justify-center'>
 							<div
-								onClick={() => signIn('google', { callbackUrl: '/' })}
+								onClick={() => signIn('google', { callbackUrl: '/profiles' })}
 								className='
 								w-10
 								h-10
@@ -197,7 +193,7 @@ const Auth = () => {
 								<FcGoogle size={30} />
 							</div>
 							<div
-								onClick={() => signIn('github', { callbackUrl: '/' })}
+								onClick={() => signIn('github', { callbackUrl: '/profiles' })}
 								className='
 								w-10
 								h-10
@@ -216,7 +212,7 @@ const Auth = () => {
 						</div>
 
 						<p onClick={toggleVariant} className='text-neutral-500 mt-5'>
-							{variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
+							{variant === 'login' ? 'First time using Notflix?' : 'Already have an account?'}
 							<span className='text-white ml-1 hover:underline cursor-pointer'>
 								{variant === 'login' ? 'Create an account' : 'Login'}
 							</span>
