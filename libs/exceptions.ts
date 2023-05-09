@@ -17,3 +17,17 @@ export class UserDoesntExist extends Error {
 		this.name = 'UserDoesntExist';
 	}
 }
+
+export class InvalidId extends Error {
+	constructor(message = 'Invalid Id') {
+		super(message);
+		this.name = 'InvalidId';
+	}
+}
+
+export class NotSignedIn extends Error {
+	constructor(message = 'Not signed in') {
+		super(message);
+		this.name = 'NotSignedIn';
+	}
+}
