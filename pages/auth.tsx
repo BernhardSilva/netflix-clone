@@ -1,17 +1,40 @@
-import Input from '@/components/Input';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
-import { signIn } from 'next-auth/react';
-
+import { getSession, signIn } from 'next-auth/react';
+import { NextPageContext } from 'next';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import Input from '@/components/Input';
 import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 
+import { validateName, validateEmail, validatePassword } from '@/utils/validations';
+import { useRouter } from 'next/router';
+
+export async function getServerSideProps(context: NextPageContext) {
+	const session = await getSession(context);
+
+	if (session) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false
+			}
+		};
+	}
+
+	return {
+		props: {}
+	};
+}
+
 const Auth = () => {
+	const router = useRouter();
+
 	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
+	const [passwordConfirmation, setPasswordConfirmation] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const [variant, setVariant] = useState('login');
@@ -19,6 +42,7 @@ const Auth = () => {
 	const [isValidName, setIsValidName] = useState(false);
 	const [isValidEmail, setIsValidEmail] = useState(false);
 	const [isSecurePassword, setIsSecurePassword] = useState(false);
+	const [isSamePassword, setIsSamePassword] = useState(false);
 
 	const [errorMessage, setErrorMessage] = useState('');
 
@@ -28,20 +52,10 @@ const Auth = () => {
 		setIsValidName(validateName(newName));
 	};
 
-	const validateName = (value: string) => {
-		const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-		return nameRegex.test(value);
-	};
-
 	const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const newEmail = event.target.value;
+		const newEmail = event.target.value.toLowerCase();
 		setEmail(newEmail);
 		setIsValidEmail(validateEmail(newEmail));
-	};
-
-	const validateEmail = (email: string): boolean => {
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return emailRegex.test(email);
 	};
 
 	const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,10 +64,10 @@ const Auth = () => {
 		setIsSecurePassword(validatePassword(newPassword));
 	};
 
-	const validatePassword = (password: string): boolean => {
-		const passwordRegex =
-			/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{9,}$/;
-		return passwordRegex.test(password);
+	const handlePasswordConfirmationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const newPasswordConfirmation = event.target.value;
+		setPasswordConfirmation(newPasswordConfirmation);
+		setIsSamePassword(newPasswordConfirmation === password);
 	};
 
 	const toggleVariant = useCallback(() => {
@@ -67,10 +81,13 @@ const Auth = () => {
 			const res = await signIn('credentials', {
 				email,
 				password,
-				callbackUrl: '/profiles'
+				redirect: false,
+				callbackUrl: '/'
 			});
+			if (res?.status === 200) {
+				router.push('/profiles');
+			}
 			if (res?.error) {
-				setLoading(false);
 				setErrorMessage(res.error);
 				console.log(res.error);
 			}
@@ -91,7 +108,6 @@ const Auth = () => {
 				password
 			});
 			if (res.status === 200) {
-				setLoading(false);
 				login();
 			}
 		} catch (error: any) {
@@ -102,7 +118,7 @@ const Auth = () => {
 	}, [email, name, password, login]);
 
 	const isRegister = () => {
-		if (!isValidEmail || !isSecurePassword || !isValidName) {
+		if (!isValidEmail || !isSecurePassword || !isValidName || !isSamePassword) {
 			return 'pointer-events-none opacity-75';
 		}
 	};
@@ -125,7 +141,7 @@ const Auth = () => {
 							{variant === 'login' ? 'Sign in' : 'Register'}
 						</h2>
 						{errorMessage && (
-							<div className='bg-orange-500 text-white py-2 px-4 rounded mb-3'>{errorMessage}</div>
+							<div className='bg-orange-500 text-white py-2 px-4 rounded mb-3'>{`${errorMessage}.`}</div>
 						)}
 						<div className='flex flex-col gap-4'>
 							{variant === 'register' && (
@@ -136,7 +152,7 @@ const Auth = () => {
 									label='Name'
 									type='text'
 									required
-									validation={validateName}
+									validation={validateName(name)}
 									errorMessage='Please enter a valid name.'
 								/>
 							)}
@@ -148,7 +164,7 @@ const Auth = () => {
 								label='Email address'
 								type='email'
 								required
-								validation={validateEmail}
+								validation={validateEmail(email)}
 								errorMessage='Please enter a valid email address.'
 							/>
 
@@ -159,10 +175,22 @@ const Auth = () => {
 								label='Password'
 								type='password'
 								required
-								validation={validatePassword}
+								validation={validatePassword(password)}
 								errorMessage='Password should have at least 9 characters with one uppercase,
 								one lowercase, one digit, and one symbol.'
 							/>
+							{variant === 'register' && (
+								<Input
+									id='passwordConfirmation'
+									value={passwordConfirmation}
+									onChange={handlePasswordConfirmationChange}
+									label='Password Confirmation'
+									type='password'
+									required
+									validation={isSamePassword}
+									errorMessage='Passwords must match.'
+								/>
+							)}
 						</div>
 						<Button
 							id={'auth-btn'}

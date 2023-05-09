@@ -9,7 +9,8 @@ interface InputProps {
 	type?: string;
 	disabled?: boolean;
 	required?: boolean;
-	validation?: (value: string) => boolean;
+	validation?: boolean;
+	isMatchPassword?: boolean;
 	errorMessage?: string;
 }
 
@@ -22,11 +23,11 @@ const Input: React.FC<InputProps> = ({
 	disabled = false,
 	required = false,
 	validation,
-	errorMessage = 'Invalid input'
+	errorMessage = 'Invalid input',
 }) => {
 	const [isTouched, setIsTouched] = useState(false);
 
-	const hasError = isTouched && (!required || !validation?.(value));
+	const hasError = isTouched && (!required || !validation);
 
 	const inputClassNames = `
     block

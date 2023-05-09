@@ -13,3 +13,19 @@ body {
 html {
   @apply h-full;
 }
+
+.loader-container {
+  @apply w-full h-screen flex justify-center items-center fixed bg-black bg-opacity-60 z-50;
+}
+
+.spinner {
+  @apply w-16 h-16 border-8 border-blue-500 border-opacity-0 rounded-full animate-spin;
+  border-top-color: rgba(255, 0, 0, 0.701);
+  border-bottom-color: rgba(255, 0, 0, 0.701);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -5,6 +5,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
 import prismadb from '@/libs/prismadb';
+import { EmailAndPasswordRequired, InconrrectPassword, UserDoesntExist } from '@/libs/exceptions';
 
 export const authOptions: AuthOptions = {
 	providers: [
@@ -22,7 +23,7 @@ export const authOptions: AuthOptions = {
 			credentials: {
 				email: {
 					label: 'Email',
-					type: 'text'
+					type: 'text',
 				},
 				password: {
 					label: 'Password',
@@ -31,7 +32,7 @@ export const authOptions: AuthOptions = {
 			},
 			async authorize(credentials) {
 				if (!credentials?.email || !credentials?.password) {
-					throw new Error('Email and password required');
+					throw new EmailAndPasswordRequired();
 				}
 
 				const user = await prismadb.user.findUnique({
@@ -41,13 +42,13 @@ export const authOptions: AuthOptions = {
 				});
 
 				if (!user || !user.hashedPassword) {
-					throw new Error("This user doesn't exist");
+					throw new UserDoesntExist()
 				}
 
 				const isCorrectPassword = await compare(credentials.password, user.hashedPassword);
 
 				if (!isCorrectPassword) {
-					throw new Error('Incorrect password');
+					throw new InconrrectPassword()
 				}
 
 				return user;
