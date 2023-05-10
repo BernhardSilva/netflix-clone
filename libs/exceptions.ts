@@ -1,33 +1,33 @@
-export class EmailAndPasswordRequired extends Error {
+export class EmailAndPasswordRequiredException extends Error {
 	constructor(message = 'Email and password required') {
 		super(message);
-		this.name = 'EmailAndPasswordRequired';
+		this.name = 'EmailAndPasswordRequiredException';
 	}
 }
-export class InconrrectPassword extends Error {
+export class InconrrectPasswordException extends Error {
 	constructor(message = 'Inconrrect Password') {
 		super(message);
-		this.name = 'InconrrectPassword';
+		this.name = 'InconrrectPasswordException';
 	}
 }
 
-export class UserDoesntExist extends Error {
+export class UserDoesntExistException extends Error {
 	constructor(message = "This user doesn't exist") {
 		super(message);
-		this.name = 'UserDoesntExist';
+		this.name = 'UserDoesntExistException';
 	}
 }
 
-export class InvalidId extends Error {
+export class InvalidIdException extends Error {
 	constructor(message = 'Invalid Id') {
 		super(message);
-		this.name = 'InvalidId';
+		this.name = 'InvalidIdException';
 	}
 }
 
-export class NotSignedIn extends Error {
+export class NotSignedInException extends Error {
 	constructor(message = 'Not signed in') {
 		super(message);
-		this.name = 'NotSignedIn';
+		this.name = 'NotSignedInException';
 	}
 }

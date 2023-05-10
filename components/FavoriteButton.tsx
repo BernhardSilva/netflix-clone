@@ -1,15 +1,28 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import axios from 'axios';
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useFavorites from '@/hooks/useFavorites';
-import { AiOutlineCheck, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiFillStar } from 'react-icons/ai';
+import { BsTrash } from 'react-icons/bs';
 
 interface FavoriteButtonProps {
-	movieId: string
+	movieId: string;
 }
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
+	const [isHovering, setIsHovered] = useState(false);
+	const onMouseEnter = () => {
+		if (isFavorite) {
+			setIsHovered(true);
+		}
+	};
+	const onMouseLeave = () => {
+		if (isFavorite) {
+			setIsHovered(false);
+		}
+	};
+
 	const { mutate: mutateFavorites } = useFavorites();
 
 	const { data: currentUser, mutate } = useCurrentUser();
@@ -24,8 +37,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 		let response;
 
 		if (isFavorite) {
-			console.log(movieId)
-			response = await axios.delete('/api/favorite', { data: movieId  });
+			response = await axios.delete('/api/favorite', { data: { movieId } });
 		} else {
 			response = await axios.post('/api/favorite', { movieId });
 		}
@@ -34,35 +46,40 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 
 		mutate({
 			...currentUser,
-			favoriteIds: updatedFavoriteIds,
+			favoriteIds: updatedFavoriteIds
 		});
 		mutateFavorites();
 	}, [movieId, isFavorite, currentUser, mutate, mutateFavorites]);
 
-	const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus;
+	const Icon = isFavorite ? (isHovering ? BsTrash : AiFillStar) : AiOutlinePlus;
 
 	return (
 		<div
 			onClick={toggleFavorites}
-			className='
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			className={`
 				cursor-pointer
 				group/item
 				w-6
 				h-6
 				lg:w-10
 				lg:h-10
-				border-white
-				hover:border-green-400
+				${
+					isFavorite
+						? 'text-yellow-400 hover:text-red-600 border-yellow-400 hover:border-red-600'
+						: 'text-white hover:text-green-400 border-white hover:border-green-400'
+				}
+				hover:border-natural-300
 				border-2
 				rounded-full
 				flex
 				justify-center
 				items-center
 				transition
-				hover:border-natural-300
-				'
+				`}
 		>
-			<Icon className='text-white hover:text-green-400' size={25} />
+			<Icon size={20} />
 		</div>
 	);
 };

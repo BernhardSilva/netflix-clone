@@ -3,13 +3,13 @@ import { getServerSession } from 'next-auth';
 
 import prismadb from '@/libs/prismadb';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { NotSignedIn } from './exceptions';
+import { NotSignedInException } from './exceptions';
 
 const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getServerSession(req, res, authOptions);
 
 	if (!session?.user?.email) {
-		throw new NotSignedIn();
+		throw new NotSignedInException();
 	}
 
 	const currentUser = await prismadb.user.findUnique({
@@ -19,7 +19,7 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
 	});
 
 	if (!currentUser) {
-		throw new NotSignedIn();
+		throw new NotSignedInException();
 	}
 
 	return { currentUser };

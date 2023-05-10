@@ -1,4 +1,5 @@
 import Billboard from '@/components/Billboard';
+import Footer from '@/components/Footer';
 import MovieList from '@/components/MovieList';
 import Navbar from '@/components/Navbar';
 import useFavorites from '@/hooks/useFavorites';
@@ -34,6 +35,11 @@ export default function Home() {
 			<Billboard />
 			<MovieList title='Trending now' data={movies} />
 			<MovieList title='My List' data={favorites} />
+			{movies[0] && (
+				<div className='pt-8'>
+					<Footer />
+				</div>
+			)}
 		</>
 	);
 }

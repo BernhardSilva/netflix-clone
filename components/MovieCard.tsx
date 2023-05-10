@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { BsFillPlayFill } from 'react-icons/bs';
 import FavoriteButton from './FavoriteButton';
+import { useRouter } from 'next/router';
 
 interface MovieCardProps {
 	data: Record<string, any>;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
+	const router = useRouter();
+
+	const [isLoading, setIsLoading] = useState(true);
+
+	const handleImageLoad = () => {
+		setIsLoading(false);
+	};
+
 	return (
 		<div className='group bg-zinc-900 col-span relative h-[12vw]'>
+			{isLoading && <div className='bg-gradient-to-r from-neutral-600 to-neutral-800 rounded-md w-full h-full animate-pulse' />}
 			<img
-				className='
+				className={`
                 cursor-pointer
                 object-cover
                 transition
@@ -23,9 +33,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                 delay-300
                 w-full
                 h-[12vw]
-                '
-				src={data.thumbnailUrl}
+                ${isLoading && 'hidden'}
+                `}
+				src={data?.thumbnailUrl}
 				alt='Thumbnail'
+				onLoad={handleImageLoad}
 			/>
 			<div
 				className='
@@ -47,17 +59,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                 '
 			>
 				<img
-					className='
-                        cursor-pointer
-                        object-cover
-                        transition
-                        duration
-                        shadow-xl
-                        rounded-t-md
-                        w-full
-                        h-[12vw]
-                        '
-					src={data.thumbnailUrl}
+					className={`
+                    cursor-pointer
+                    object-cover
+                    transition
+                    duration
+                    shadow-xl
+                    rounded-t-md
+                    w-full
+                    h-[12vw]
+                    ${isLoading && 'hidden'}
+                    `}
+					src={data?.thumbnailUrl}
 					alt='Thumbnail'
 				/>
 				<div
@@ -88,20 +101,20 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                                     transition
                                     hover:bg-neutral-300
                                     '
-							onClick={() => {}}
+							onClick={() => router.push(`/watch/${data?.id}`)}
 						>
 							<BsFillPlayFill size={30} />
 						</div>
-						<FavoriteButton movieId={data.id} />
+						<FavoriteButton movieId={data?.id} />
 					</div>
 					<p className='text-green-400 font-semibold mt-4'>
 						New <span className='text-white'>2023</span>
 					</p>
 					<div className='flex flex-row mt-4 gap-2 items-center'>
-						<p className='text-white text-[14px] lg:txt-md'>{data.duration}</p>
+						<p className='text-white text-[14px] lg:txt-md'>{data?.duration}</p>
 					</div>
 					<div className='flex flex-row mt-4 gap-2 items-center'>
-						<p className='text-white text-[14px] lg:txt-md'>{data.genre}</p>
+						<p className='text-white text-[14px] lg:txt-md'>{data?.genre}</p>
 					</div>
 				</div>
 			</div>
