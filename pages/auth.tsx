@@ -1,14 +1,20 @@
-import axios from 'axios';
-import { useCallback, useState } from 'react';
-import { getSession, signIn } from 'next-auth/react';
-import { NextPageContext } from 'next';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
-import Input from '@/components/Input';
 import Button from '@/components/Button';
 import Footer from '@/components/Footer';
+import Input from '@/components/Input';
+import axios from 'axios';
+import { NextPageContext } from 'next';
+import { getSession, signIn } from 'next-auth/react';
+import { useCallback, useState } from 'react';
+import { FaGithub } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 
-import { validateName, validateEmail, validatePassword } from '@/utils/validations';
+import {
+	validEmailMessage,
+	validNameMessage,
+	validPassowrdMessage,
+	validPasswordMatchMessage
+} from '@/utils/errorMessages';
+import { validateEmail, validateName, validatePassword } from '@/utils/validations';
 import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -153,7 +159,7 @@ const Auth = () => {
 									type='text'
 									required
 									validation={validateName(name)}
-									errorMessage='Please enter a valid name.'
+									errorMessage={validNameMessage}
 								/>
 							)}
 
@@ -165,7 +171,7 @@ const Auth = () => {
 								type='email'
 								required
 								validation={validateEmail(email)}
-								errorMessage='Please enter a valid email address.'
+								errorMessage={validEmailMessage}
 							/>
 
 							<Input
@@ -176,8 +182,7 @@ const Auth = () => {
 								type='password'
 								required
 								validation={validatePassword(password)}
-								errorMessage='Password should have at least 9 characters with one uppercase,
-								one lowercase, one digit, and one symbol.'
+								errorMessage={validPassowrdMessage}
 							/>
 							{variant === 'register' && (
 								<Input
@@ -188,7 +193,7 @@ const Auth = () => {
 									type='password'
 									required
 									validation={isSamePassword}
-									errorMessage='Passwords must match.'
+									errorMessage={validPasswordMatchMessage}
 								/>
 							)}
 						</div>

@@ -3,8 +3,7 @@ import axios from 'axios';
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useFavorites from '@/hooks/useFavorites';
-import { AiOutlinePlus, AiFillStar } from 'react-icons/ai';
-import { BsTrash } from 'react-icons/bs';
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
 
 interface FavoriteButtonProps {
 	movieId: string;
@@ -51,7 +50,11 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 		mutateFavorites();
 	}, [movieId, isFavorite, currentUser, mutate, mutateFavorites]);
 
-	const Icon = isFavorite ? (isHovering ? BsTrash : AiFillStar) : AiOutlinePlus;
+	const Icon = isFavorite
+		? isHovering
+			? MdOutlineFavoriteBorder
+			: MdOutlineFavorite
+		: MdOutlineFavoriteBorder;
 
 	return (
 		<div
@@ -59,25 +62,22 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			className={`
-				cursor-pointer
-				group/item
-				w-6
-				h-6
-				lg:w-10
-				lg:h-10
-				${
-					isFavorite
-						? 'text-yellow-400 hover:text-red-600 border-yellow-400 hover:border-red-600'
-						: 'text-white hover:text-green-400 border-white hover:border-green-400'
-				}
-				hover:border-natural-300
-				border-2
-				rounded-full
-				flex
-				justify-center
-				items-center
-				transition
-				`}
+			cursor-pointer
+			group/item
+			p-1
+            md:p-2
+			${isFavorite && 'text-red-600 border-red-600 hover:text-white hover:border-white'}
+			border-white
+			text-white
+			hover:text-red-600
+			hover:border-red-600
+			border-2
+			rounded-full
+			flex
+			justify-center
+			items-center
+			transition
+			`}
 		>
 			<Icon size={20} />
 		</div>

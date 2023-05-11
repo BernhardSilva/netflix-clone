@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { BsFillPlayFill } from 'react-icons/bs';
-import FavoriteButton from './FavoriteButton';
+import useInfoModal from '@/hooks/useInfoModal';
 import { useRouter } from 'next/router';
+import { BsChevronDown, BsFillPlayFill } from 'react-icons/bs';
+import FavoriteButton from './FavoriteButton';
 
 interface MovieCardProps {
 	data: Record<string, any>;
@@ -10,6 +11,7 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 	const router = useRouter();
+	const { openModal } = useInfoModal();
 
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +21,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 
 	return (
 		<div className='group bg-zinc-900 col-span relative h-[12vw]'>
-			{isLoading && <div className='bg-gradient-to-r from-neutral-600 to-neutral-800 rounded-md w-full h-full animate-pulse' />}
+			{isLoading && (
+				<div className='bg-gradient-to-r from-neutral-600 to-neutral-800 rounded-md w-full h-[12vw] animate-pulse' />
+			)}
 			<img
 				className={`
                 cursor-pointer
@@ -38,6 +42,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 				src={data?.thumbnailUrl}
 				alt='Thumbnail'
 				onLoad={handleImageLoad}
+				onClick={() => router.push(`/watch/${data?.id}`)}
 			/>
 			<div
 				className='
@@ -88,33 +93,62 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 				>
 					<div className='flex flex-row items-center gap-3'>
 						<div
-							className='cursor-pointer
-                                    w-6
-                                    h-6
-                                    lg:w-10
-                                    lg:h-10
-                                    bg-white
-                                    rounded-full
-                                    flex
-                                    justify-center
-                                    items-center
-                                    transition
-                                    hover:bg-neutral-300
-                                    '
+							className='
+                            cursor-pointer
+                            w-6
+                            h-6
+                            lg:w-10
+                            lg:h-10
+                            bg-white
+                            rounded-full
+                            flex
+                            justify-center
+                            items-center
+                            transition
+                            hover:bg-neutral-300
+                            '
 							onClick={() => router.push(`/watch/${data?.id}`)}
 						>
-							<BsFillPlayFill size={30} />
+							<BsFillPlayFill size={25} className='ml-0.5' />
 						</div>
 						<FavoriteButton movieId={data?.id} />
+						<div
+							onClick={() => openModal(data?.id)}
+							className='
+                            cursor-pointer
+                            ml-auto
+                            group/item
+                            w-6
+                            h-6
+                            lg:w-10
+                            lg:h-10
+                            border-white
+                            border-2
+                            rounded-full
+                            flex
+                            justify-center
+                            items-center
+                            transition
+                            hover:border-neutral-300
+                            '
+						>
+							<BsChevronDown className='text-white text-bold group-hover/item:text-neutral-300' />
+						</div>
 					</div>
-					<p className='text-green-400 font-semibold mt-4'>
-						New <span className='text-white'>2023</span>
-					</p>
-					<div className='flex flex-row mt-4 gap-2 items-center'>
-						<p className='text-white text-[14px] lg:txt-md'>{data?.duration}</p>
-					</div>
-					<div className='flex flex-row mt-4 gap-2 items-center'>
-						<p className='text-white text-[14px] lg:txt-md'>{data?.genre}</p>
+					<div className='lg:inline-flex'>
+						<p className='text-green-400 font-semibold mt-4'>
+							New <span className='text-white'>2023</span>
+						</p>
+						<div className='flex flex-row lg:mt-4 gap-2 items-center'>
+							<p className='text-gray-400 text-[14px] lg:txt-md lg:ml-2 font-semibold'>
+								{data?.duration}
+							</p>
+						</div>
+						<div className='flex flex-row lg:mt-4 gap-2 items-center'>
+							<p className='text-gray-400 text-[14px] lg:txt-md lg:ml-2 font-semibold'>
+								{data?.genre}
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -11,25 +11,27 @@ const PlayButton: React.FC<PlayButtonProps> = ({ movieId }) => {
 
 	return (
 		<button
-            onClick={() => router.push(`/watch/${movieId}`)}
+			onClick={() => router.push(`/watch/${movieId}`)}
 			className='
-                    bg-white
-                    rounded-md
-                    py-1 md:py-2
-                    px-2 md:px-4
-                    w-auto
-                    text-xs lg:text-lg
-                    font-semibold
-                    flex
-                    flex-row
-                    items-center
-                    hover:bg-neutral-300
-                    transition
-                    '
+            bg-white
+            rounded-md
+            p-1
+            md:p-2
+            lg:px-4
+            lg:py-2
+            w-auto
+            text-xs lg:text-lg
+            font-semibold
+            flex
+            flex-row
+            items-center
+            hover:bg-neutral-300
+            transition
+            '
 		>
-            <BsFillPlayFill size={20} className='mr-1.5 '/>
-            Play
-        </button>
+			<BsFillPlayFill size={25} />
+			<p className='hidden sm:block'>Play</p>
+		</button>
 	);
 };
 
