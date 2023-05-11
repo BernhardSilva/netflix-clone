@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
 import axios from 'axios';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useFavorites from '@/hooks/useFavorites';
-import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 
 interface FavoriteButtonProps {
 	movieId: string;
@@ -66,11 +66,9 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 			group/item
 			p-1
             md:p-2
-			${isFavorite && 'text-red-600 border-red-600 hover:text-white hover:border-white'}
-			border-white
-			text-white
 			hover:text-red-600
 			hover:border-red-600
+			${isFavorite ? 'text-red-600 border-red-600': 'text-white border-white'}
 			border-2
 			rounded-full
 			flex
