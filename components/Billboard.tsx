@@ -1,8 +1,8 @@
 import useBillboard from '@/hooks/useBillboard';
-import React, { useCallback, useState } from 'react';
+import useInfoModal from '@/hooks/useInfoModal';
+import { useCallback, useState } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
 import PlayButton from './PlayButton';
-import useInfoModal from '@/hooks/useInfoModal';
 
 const Billboard = () => {
 	const { data } = useBillboard();
@@ -43,11 +43,11 @@ const Billboard = () => {
 					{data?.description}
 				</p>
 				<div className='flex flex-row items-center mt-3 md:mt-4 gap-3'>
-					<PlayButton movieId={data?.id} />
+					<PlayButton movieId={data?.id} disabled={isLoading} />
 					<button
-						className='
-						bg-white
+						className={`
 						text-white
+						bg-white
 						bg-opacity-30
 						rounded-md
 						p-1
@@ -61,9 +61,11 @@ const Billboard = () => {
 						flex
 						flex-row
 						items-center
-						hover:bg-opacity-20
-						transition'
+						${isLoading ? 'bg-zinc-400 text-zinc-400' : 'hover:bg-opacity-20'}
+						transition
+						`}
 						onClick={handleOpenModal}
+						disabled={isLoading}
 					>
 						<BsInfoCircle size={25} />
 						<p className='hidden sm:block ml-1.5'>More Info</p>

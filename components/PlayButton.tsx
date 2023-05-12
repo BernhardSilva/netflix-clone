@@ -4,15 +4,17 @@ import { useRouter } from 'next/router';
 
 interface PlayButtonProps {
 	movieId: string;
+	disabled?: boolean;
 }
 
-const PlayButton: React.FC<PlayButtonProps> = ({ movieId }) => {
+const PlayButton: React.FC<PlayButtonProps> = ({ movieId, disabled }) => {
 	const router = useRouter();
 
 	return (
 		<button
 			onClick={() => router.push(`/watch/${movieId}`)}
-			className='
+			disabled={disabled}
+			className={`
             bg-white
             rounded-md
             p-1
@@ -25,9 +27,9 @@ const PlayButton: React.FC<PlayButtonProps> = ({ movieId }) => {
             flex
             flex-row
             items-center
-            hover:bg-neutral-300
             transition
-            '
+            ${disabled ? 'bg-zinc-400' : 'hover:bg-neutral-300'}
+            `}
 		>
 			<BsFillPlayFill size={25} />
 			<p className='hidden sm:block'>Play</p>

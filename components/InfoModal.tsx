@@ -1,10 +1,9 @@
 import useInfoModal from '@/hooks/useInfoModal';
 import useMovie from '@/hooks/useMovie';
-import React, { useCallback, useState } from 'react';
-import { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import PlayButton from './PlayButton';
 import FavoriteButton from './FavoriteButton';
+import PlayButton from './PlayButton';
 
 interface InfoModalProps {
 	visible?: boolean;
@@ -12,22 +11,24 @@ interface InfoModalProps {
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
-	const [isVisible, setIsVisible] = useState(!!visible);
+	const [isVisible, setIsVisible] = useState(!!visible)
 	const [isLoading, setIsLoading] = useState(true);
 
 	const { movieId } = useInfoModal();
 	const { data = {} } = useMovie(movieId);
 
-	useEffect(() => {
-		setIsVisible(!!visible);
-	}, [visible]);
-
 	const handleClose = useCallback(() => {
 		setIsVisible(false);
 		setTimeout(() => {
 			onClose();
+			setIsLoading(true)
+			console.log('cerrado');
 		}, 300);
 	}, [onClose]);
+
+	useEffect(() => {
+		setIsVisible(!!visible);
+	}, [visible]);
 
 	const handleLoadStart = () => {
 		setIsLoading(true);
@@ -71,7 +72,8 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
 				>
 					<div className='relative h-96'>
 						<video
-							className={`w-full brigthness-[60%] object-cover h-full ${isLoading && 'bg-gradient-to-r from-neutral-600 to-neutral-800 animate-pulse'}`}
+							className={`w-full brigthness-[60%] object-cover h-full
+							${isLoading && 'bg-gradient-to-r from-neutral-600 to-neutral-800 animate-pulse'}`}
 							poster={data?.thumbnailUrl}
 							src={data?.videoUrl}
 							autoPlay
@@ -101,23 +103,62 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
 						</div>
 						<div className='absolute bottom-[10%] left-10'>
 							<p className='text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8'>
-								{data?.tittle}
+								{data?.title}
 							</p>
 							<div className='flex flex-row gap-4 items-center'>
-								<PlayButton movieId={data?.id} />
-								<FavoriteButton movieId={data?.id} />
+								<PlayButton movieId={data?.id} disabled={isLoading} />
+								<FavoriteButton movieId={data?.id} disabled={isLoading} />
 							</div>
 						</div>
 					</div>
 					<div className='px-12 py-8'>
 						<div className='flex display-inline'>
-							<p className='text-green-400 font-semibold'>
-								New<span className='text-white'> 2023</span>
+							<p
+								className={`font-semibold
+							${
+								isLoading &&
+								'h-6 w-30 rounded-2xl bg-gradient-to-r from-neutral-600 to-neutral-800 animate-pulse'
+							}`}
+							>
+								<span className={`text-green-400 ${isLoading && 'opacity-0'}`}>New</span>
+								<span className={`text-white ${isLoading && 'opacity-0'}`}> 2023</span>
 							</p>
-							<p className='ml-2 text-gray-400 text-md font-semibold'>{data?.duration}</p>
-							<p className='ml-2 text-gray-400 text-md font-semibold'>{data?.genre}</p>
+							<p
+								className={`ml-2 text-gray-400 text-md font-semibold
+							${
+								isLoading &&
+								'h-6 w-30 rounded-2xl bg-gradient-to-r from-neutral-600 to-neutral-800 animate-pulse'
+							}`}
+							>
+								{isLoading ? <span className='opacity-0'>{'durationMockup'}</span> : data?.duration}
+							</p>
+							<p
+								className={`ml-2 text-gray-400 text-md font-semibold
+							${
+								isLoading &&
+								'h-6 w-30 rounded-2xl bg-gradient-to-r from-neutral-600 to-neutral-800 animate-pulse'
+							}`}
+							>
+								{isLoading ? <span className='opacity-0'>{'genreMockup'}</span> : data?.genre}
+							</p>
 						</div>
-						<p className='text-white mt-2 text-lg font-light'>{data?.description}</p>
+						<div
+							className={`text-white mt-2 text-lg font-light
+						${
+							isLoading &&
+							'w-[95%] rounded-2xl bg-gradient-to-r from-neutral-600 to-neutral-800 animate-pulse'
+						}`}
+						>
+							{isLoading ? (
+								<>
+									<p className='opacity-0'>{'descMockup1'}</p>
+									<p className='opacity-0'>{'descMockup2'}</p>
+									<p className='opacity-0'>{'descMockup3'}</p>
+								</>
+							) : (
+								data?.description
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

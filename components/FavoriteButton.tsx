@@ -7,9 +7,10 @@ import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 
 interface FavoriteButtonProps {
 	movieId: string;
+	disabled?: boolean;
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, disabled }) => {
 	const [isHovering, setIsHovered] = useState(false);
 	const onMouseEnter = () => {
 		if (isFavorite) {
@@ -57,28 +58,29 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 		: MdOutlineFavoriteBorder;
 
 	return (
-		<div
+		<button
 			onClick={toggleFavorites}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
+			disabled={disabled}
 			className={`
-			cursor-pointer
 			group/item
 			p-1
             md:p-2
 			hover:text-red-600
 			hover:border-red-600
-			${isFavorite ? 'text-red-600 border-red-600': 'text-white border-white'}
+			${isFavorite ? 'text-red-600 border-red-600' : 'text-white border-white'}
 			border-2
 			rounded-full
 			flex
 			justify-center
 			items-center
 			transition
+			${disabled && 'opacity-40'}
 			`}
 		>
 			<Icon size={20} />
-		</div>
+		</button>
 	);
 };
 

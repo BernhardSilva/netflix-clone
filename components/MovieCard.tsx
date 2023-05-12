@@ -42,7 +42,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 				src={data?.thumbnailUrl}
 				alt='Thumbnail'
 				onLoad={handleImageLoad}
-				onClick={() => router.push(`/watch/${data?.id}`)}
+				onClick={() => openModal(data.id)}
 			/>
 			<div
 				className='
