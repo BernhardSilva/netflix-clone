@@ -77,6 +77,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                     `}
 					src={data?.thumbnailUrl}
 					alt='Thumbnail'
+                    onClick={() => router.push(`/watch/${data.id}`)}
 				/>
 				<div
 					className='
