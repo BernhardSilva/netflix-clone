@@ -16,6 +16,7 @@ import {
 } from '@/utils/errorMessages';
 import { validateEmail, validateName, validatePassword } from '@/utils/validations';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export async function getServerSideProps(context: NextPageContext) {
 	const session = await getSession(context);
@@ -136,81 +137,85 @@ const Auth = () => {
 	};
 
 	return (
-		<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
-			<div className={`bg-black w-full h-full lg:bg-opacity-50`}>
-				<nav className='px-12 py-5'>
-					<img src='/images/logo.png' alt='logo' className='h-10 lg:h-12'></img>
-				</nav>
-				<div className={`flex justify-center h-[80%]  ${loading && 'pointer-events-none opacity-75'}`}>
-					<div className='bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full'>
-						<h2 className='text-white text-4xl mb-8 font-semibold'>
-							{variant === 'login' ? 'Sign in' : 'Register'}
-						</h2>
-						{errorMessage && (
-							<div className='bg-orange-500 text-white py-2 px-4 rounded mb-3'>{`${errorMessage}.`}</div>
-						)}
-						<div className='flex flex-col gap-4'>
-							{variant === 'register' && (
-								<Input
-									id='name'
-									onChange={handleNameChange}
-									value={name}
-									label='Name'
-									type='text'
-									required
-									validation={validateName(name)}
-									errorMessage={validNameMessage}
-								/>
+		<>
+			<Head>
+				<title>Notflix</title>
+			</Head>
+			<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
+				<div className={`bg-black w-full h-full lg:bg-opacity-50`}>
+					<nav className='px-12 py-5'>
+						<img src='/images/logo.png' alt='logo' className='h-10 lg:h-12'></img>
+					</nav>
+					<div className={`flex justify-center h-[80%]  ${loading && 'pointer-events-none opacity-75'}`}>
+						<div className='bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full'>
+							<h2 className='text-white text-4xl mb-8 font-semibold'>
+								{variant === 'login' ? 'Sign in' : 'Register'}
+							</h2>
+							{errorMessage && (
+								<div className='bg-orange-500 text-white py-2 px-4 rounded mb-3'>{`${errorMessage}.`}</div>
 							)}
+							<div className='flex flex-col gap-4'>
+								{variant === 'register' && (
+									<Input
+										id='name'
+										onChange={handleNameChange}
+										value={name}
+										label='Name'
+										type='text'
+										required
+										validation={validateName(name)}
+										errorMessage={validNameMessage}
+									/>
+								)}
 
-							<Input
-								id='email'
-								value={email}
-								onChange={handleEmailChange}
-								label='Email address'
-								type='email'
-								required
-								validation={validateEmail(email)}
-								errorMessage={validEmailMessage}
-							/>
-
-							<Input
-								id='password'
-								value={password}
-								onChange={handlePasswordChange}
-								label='Password'
-								type='password'
-								required
-								validation={validatePassword(password)}
-								errorMessage={validPassowrdMessage}
-							/>
-							{variant === 'register' && (
 								<Input
-									id='passwordConfirmation'
-									value={passwordConfirmation}
-									onChange={handlePasswordConfirmationChange}
-									label='Password Confirmation'
+									id='email'
+									value={email}
+									onChange={handleEmailChange}
+									label='Email address'
+									type='email'
+									required
+									validation={validateEmail(email)}
+									errorMessage={validEmailMessage}
+								/>
+
+								<Input
+									id='password'
+									value={password}
+									onChange={handlePasswordChange}
+									label='Password'
 									type='password'
 									required
-									validation={isSamePassword}
-									errorMessage={validPasswordMatchMessage}
+									validation={validatePassword(password)}
+									errorMessage={validPassowrdMessage}
 								/>
-							)}
-						</div>
-						<Button
-							id={'auth-btn'}
-							label={variant === 'login' ? 'Login' : 'Register'}
-							className={`bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition ${
-								variant === 'login' ? isLogin() : isRegister()
-							}`}
-							onClick={variant === 'login' ? login : register}
-							loading={loading}
-						/>
+								{variant === 'register' && (
+									<Input
+										id='passwordConfirmation'
+										value={passwordConfirmation}
+										onChange={handlePasswordConfirmationChange}
+										label='Password Confirmation'
+										type='password'
+										required
+										validation={isSamePassword}
+										errorMessage={validPasswordMatchMessage}
+									/>
+								)}
+							</div>
+							<Button
+								id={'auth-btn'}
+								label={variant === 'login' ? 'Login' : 'Register'}
+								className={`bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition 
+								${variant === 'login' ? isLogin() : isRegister()
+									}`}
+								onClick={variant === 'login' ? login : register}
+								loading={loading}
+							/>
 
-						<div className='flex flex-row items-center gap-4 mt-8 justify-center'>
-							<div
-								onClick={() => signIn('google', { callbackUrl: '/profiles' })}
-								className='
+							<div className='flex flex-row items-center gap-4 mt-8 justify-center'>
+								<div
+									onClick={() => signIn('google', { callbackUrl: '/profiles' })}
+									className='
 								w-10
 								h-10
 								bg-white
@@ -222,12 +227,12 @@ const Auth = () => {
 								hover:opacity-80
 								transition
 								'
-							>
-								<FcGoogle size={30} />
-							</div>
-							<div
-								onClick={() => signIn('github', { callbackUrl: '/profiles' })}
-								className='
+								>
+									<FcGoogle size={30} />
+								</div>
+								<div
+									onClick={() => signIn('github', { callbackUrl: '/profiles' })}
+									className='
 								w-10
 								h-10
 								bg-white
@@ -239,22 +244,23 @@ const Auth = () => {
 								hover:opacity-80
 								transition
 								'
-							>
-								<FaGithub size={30} />
+								>
+									<FaGithub size={30} />
+								</div>
 							</div>
-						</div>
 
-						<p onClick={toggleVariant} className='text-neutral-500 mt-5'>
-							{variant === 'login' ? 'First time using Notflix?' : 'Already have an account?'}
-							<span className='text-white ml-1 hover:underline cursor-pointer'>
-								{variant === 'login' ? 'Create an account' : 'Login'}
-							</span>
-						</p>
+							<p onClick={toggleVariant} className='text-neutral-500 mt-5'>
+								{variant === 'login' ? 'First time using Notflix?' : 'Already have an account?'}
+								<span className='text-white ml-1 hover:underline cursor-pointer'>
+									{variant === 'login' ? 'Create an account' : 'Login'}
+								</span>
+							</p>
+						</div>
 					</div>
 				</div>
+				<Footer />
 			</div>
-			<Footer />
-		</div>
+		</>
 	);
 };
 
