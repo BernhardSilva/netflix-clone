@@ -137,7 +137,7 @@ const Auth = () => {
 	};
 
 	return (
-		<html lang="en">
+		<>
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta name="description" content="This is Notflix, a demo app for watch some shorts, enjoy it!" />
@@ -264,7 +264,7 @@ const Auth = () => {
 				</div>
 				<Footer />
 			</div>
-		</html>
+		</>
 	);
 };
 
