@@ -37,7 +37,7 @@ const Input: React.FC<InputProps> = ({
     pb-1
     w-full
     text-white
-    bg-neutral-700
+    bg-[#333]
     appearance-none
     focus:outline-none
     focus:ring-0
@@ -47,11 +47,11 @@ const Input: React.FC<InputProps> = ({
 
 	const labelClassNames = `
     absolute
-    text-zinc-400
+    text-[#9e9d9d]
     duration-150 
     transform 
     -translate-y-3 
-    scale-75 
+    scale-75
     top-4 
     z-10 
     origin-[0]
