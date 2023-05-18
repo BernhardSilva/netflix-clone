@@ -139,7 +139,8 @@ const Auth = () => {
 	return (
 		<html lang="en">
 			<Head>
-				<meta name="description" content="Notflix application is an app for watch some shorts." />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta name="description" content="This is Notflix, a demo app for watch some shorts, enjoy it!" />
 				<meta name="keywords" content="Notflix, Shorts" />
 				<meta name="author" content="Bernhard Silva" />
 				<title>Notflix</title>
