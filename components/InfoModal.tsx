@@ -22,7 +22,6 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
 		setTimeout(() => {
 			onClose();
 			setIsLoading(true)
-			console.log('cerrado');
 		}, 300);
 	}, [onClose]);
 
