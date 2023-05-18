@@ -137,8 +137,11 @@ const Auth = () => {
 	};
 
 	return (
-		<>
+		<html lang="en">
 			<Head>
+				<meta name="description" content="Notflix application is an app for watch some shorts." />
+				<meta name="keywords" content="Notflix, Shorts" />
+				<meta name="author" content="Bernhard Silva" />
 				<title>Notflix</title>
 			</Head>
 			<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -260,7 +263,7 @@ const Auth = () => {
 				</div>
 				<Footer />
 			</div>
-		</>
+		</html>
 	);
 };
 
