@@ -3,10 +3,12 @@ import NavbarItem from './NavbarItem';
 import AccountMenu from './AccountMenu';
 import { BsChevronDown, BsSearch, BsBell } from 'react-icons/bs';
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const TOP_OFFSET = 66;
 
 const Navbar = () => {
+	const router = useRouter();
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
 	const [showAccountMenu, setShowAccountMenu] = useState(false);
 	const [showBackground, setShowBackground] = useState(false);
@@ -20,10 +22,10 @@ const Navbar = () => {
 			}
 		};
 
-        window.addEventListener('scroll', handleScroll)
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
+		window.addEventListener('scroll', handleScroll)
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+		}
 	}, []);
 
 	const toggleMobileMenu = useCallback(() => {
@@ -49,7 +51,7 @@ const Navbar = () => {
                     ${showBackground && 'bg-zinc-900 bg-opacity-90'}
                     `}
 			>
-				<img className='h-4 lg:h-7' src='/images/logo.png' alt='Logo' />
+				<img className='h-4 lg:h-7 cursor-pointer' src='/images/logo.png' alt='Logo' onClick={() => router.push('/')} />
 				<div
 					className='
                         flex-row
@@ -59,9 +61,9 @@ const Navbar = () => {
                         lg:flex
                         '
 				>
-					<NavbarItem label='Home' />
-					<NavbarItem label='My List' />
-					<NavbarItem label='Shorts' />
+					<NavbarItem label='Home' onClick={() => router.push('/')} />
+					<NavbarItem label='My List' onClick={() => {''}} />
+					<NavbarItem label='Shorts' onClick={() => {''}} />
 				</div>
 				<div
 					className='lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative'
