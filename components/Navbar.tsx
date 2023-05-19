@@ -1,17 +1,24 @@
+import { useCallback, useEffect, useState } from 'react';
+import { BsBell, BsChevronDown, BsSearch } from 'react-icons/bs';
+import AccountMenu from './AccountMenu';
 import MobileMenu from './MobileMenu';
 import NavbarItem from './NavbarItem';
-import AccountMenu from './AccountMenu';
-import { BsChevronDown, BsSearch, BsBell } from 'react-icons/bs';
-import { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 const TOP_OFFSET = 66;
 
-const Navbar = () => {
-	const router = useRouter();
+interface NavbarProps {
+	updateNavbar: (newValue: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ updateNavbar }: NavbarProps) => {
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
 	const [showAccountMenu, setShowAccountMenu] = useState(false);
 	const [showBackground, setShowBackground] = useState(false);
+
+	const handleNavbarType = (value: string) => {
+		updateNavbar(value);
+	};
+
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -51,7 +58,7 @@ const Navbar = () => {
                     ${showBackground && 'bg-zinc-900 bg-opacity-90'}
                     `}
 			>
-				<img className='h-4 lg:h-7 cursor-pointer' src='/images/logo.png' alt='Logo' onClick={() => router.push('/')} />
+				<img className='h-4 lg:h-7 cursor-pointer' src='/images/logo.png' alt='Logo' onClick={() => handleNavbarType("Home")} />
 				<div
 					className='
                         flex-row
@@ -61,9 +68,9 @@ const Navbar = () => {
                         lg:flex
                         '
 				>
-					<NavbarItem label='Home' onClick={() => router.push('/')} />
-					<NavbarItem label='My List' onClick={() => {''}} />
-					<NavbarItem label='Shorts' onClick={() => {''}} />
+					<NavbarItem label='Home' onClick={() => handleNavbarType("Home")} />
+					<NavbarItem label='My List' onClick={() => handleNavbarType("MyList")} />
+					<NavbarItem label='Trending' onClick={() => handleNavbarType('Trending')} />
 				</div>
 				<div
 					className='lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative'
@@ -71,7 +78,7 @@ const Navbar = () => {
 				>
 					<p className='text-white text-sm'>Browse</p>
 					<BsChevronDown className={`text-white transition ${showMobileMenu && 'rotate-180'}`} />
-					<MobileMenu visible={showMobileMenu} />
+					<MobileMenu visible={showMobileMenu} updateNavbar={handleNavbarType} />
 				</div>
 				<div className='flex flex-row ml-auto gap-7 items-center'>
 					<div className='text-gray-200 hover:text-gray-300 cursor-pointer transition'>

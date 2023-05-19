@@ -8,6 +8,7 @@ import useMovieList from '@/hooks/useMovieList';
 
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
+import { useState, useEffect } from 'react';
 
 export async function getServerSideProps(context: NextPageContext) {
 	const session = await getSession(context);
@@ -30,14 +31,21 @@ export default function Home() {
 	const { data: movies = [] } = useMovieList();
 	const { data: favorites = [] } = useFavorites();
 	const { isOpen, closeModal } = useInfoModal();
+	const [navBarType, setNavbarType] = useState("");
+
+	const updateNavbar = (newValue: string) => {
+		setNavbarType(newValue);
+	};
 
 	return (
 		<>
 			<InfoModal visible={isOpen} onClose={closeModal} />
-			<Navbar />
+			<Navbar updateNavbar={updateNavbar} />
 			<Billboard />
-			<MovieList title='Trending now' data={movies} />
-			<div className='pb-8'>
+			<div className={`${navBarType === 'MyList' && 'hidden'}`}>
+				<MovieList title='Trending now' data={movies} />
+			</div>
+			<div className={`${navBarType === 'Trending' && 'hidden'} pb-8`}>
 				<MovieList title='My List' data={favorites} />
 			</div>
 		</>
