@@ -1,3 +1,4 @@
+import { menuLabels } from '@/utils/labels';
 import React from 'react';
 
 interface MobileMenuProps {
@@ -18,9 +19,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ visible, updateNavbar }: Mobile
 	return (
 		<div className='bg-black w-56 absolute top-8 left-0 py-5 flex-col border-2 border-gray-800 flex '>
 			<div className='flex flex-col gap-4'>
-				<div className='px-3 text-center text-white hover:underline' onClick={() => handleNavbarType("Home")}>Home</div>
-				<div className='px-3 text-center text-white hover:underline' onClick={() => handleNavbarType("MyList")}>My List</div>
-				<div className='px-3 text-center text-white hover:underline' onClick={() => handleNavbarType("Trending")}>Trending now</div>
+				<div className='px-3 text-center text-white hover:underline' onClick={() => handleNavbarType(menuLabels.home)}>Home</div>
+				<div className='px-3 text-center text-white hover:underline' onClick={() => handleNavbarType(menuLabels.myList)}>My List</div>
+				<div className='px-3 text-center text-white hover:underline' onClick={() => handleNavbarType(menuLabels.trending)}>Trending now</div>
 			</div>
 		</div>
 	);

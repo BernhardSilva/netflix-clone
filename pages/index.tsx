@@ -5,10 +5,11 @@ import Navbar from '@/components/Navbar';
 import useFavorites from '@/hooks/useFavorites';
 import useInfoModal from '@/hooks/useInfoModal';
 import useMovieList from '@/hooks/useMovieList';
+import { menuLabels } from '@/utils/labels';
 
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export async function getServerSideProps(context: NextPageContext) {
 	const session = await getSession(context);
@@ -42,11 +43,11 @@ export default function Home() {
 			<InfoModal visible={isOpen} onClose={closeModal} />
 			<Navbar updateNavbar={updateNavbar} />
 			<Billboard />
-			<div className={`${navBarType === 'MyList' && 'hidden'}`}>
-				<MovieList title='Trending now' data={movies} />
+			<div className={`${navBarType === menuLabels.myList && 'hidden'}`}>
+				<MovieList title={menuLabels.trending} data={movies} />
 			</div>
-			<div className={`${navBarType === 'Trending' && 'hidden'} pb-8`}>
-				<MovieList title='My List' data={favorites} />
+			<div className={`${navBarType === menuLabels.trending && 'hidden'} pb-8`}>
+				<MovieList title={menuLabels.myList} data={favorites} />
 			</div>
 		</>
 	);

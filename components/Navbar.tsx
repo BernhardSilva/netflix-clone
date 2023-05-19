@@ -3,6 +3,7 @@ import { BsBell, BsChevronDown, BsSearch } from 'react-icons/bs';
 import AccountMenu from './AccountMenu';
 import MobileMenu from './MobileMenu';
 import NavbarItem from './NavbarItem';
+import { menuLabels } from '@/utils/labels';
 
 const TOP_OFFSET = 66;
 
@@ -68,9 +69,9 @@ const Navbar: React.FC<NavbarProps> = ({ updateNavbar }: NavbarProps) => {
                         lg:flex
                         '
 				>
-					<NavbarItem label='Home' onClick={() => handleNavbarType("Home")} />
-					<NavbarItem label='My List' onClick={() => handleNavbarType("MyList")} />
-					<NavbarItem label='Trending' onClick={() => handleNavbarType('Trending')} />
+					<NavbarItem label={menuLabels.home} onClick={() => handleNavbarType(menuLabels.home)} />
+					<NavbarItem label={menuLabels.myList} onClick={() => handleNavbarType(menuLabels.myList)} />
+					<NavbarItem label={menuLabels.trending.replace("now", "")} onClick={() => handleNavbarType(menuLabels.trending)} />
 				</div>
 				<div
 					className='lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative'
