@@ -86,6 +86,7 @@ const Input: React.FC<InputProps> = ({
 			/>
 			{type === 'password' &&
 				<button
+					name="hidePasswordToggleButton"
 					className="absolute top-[16px] right-[5px] flex items-center px-4 text-gray-400"
 					onClick={togglePasswordVisibility}
 				>

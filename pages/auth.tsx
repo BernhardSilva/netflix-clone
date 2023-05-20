@@ -96,13 +96,13 @@ const Auth = () => {
 			}
 			if (res?.error) {
 				setErrorMessage(res.error);
-				console.log(res.error);
+				// console.log(res.error);
 			}
 			setLoading(false);
 		} catch (error: any) {
 			setLoading(false);
 			setErrorMessage(error.message);
-			console.log(error);
+			// console.log(error);
 		}
 	}, [email, password]);
 
@@ -120,7 +120,7 @@ const Auth = () => {
 		} catch (error: any) {
 			setLoading(false);
 			setErrorMessage(error.response.data.error);
-			console.log(error.response.data.error);
+			// console.log(error.response.data.error);
 		}
 	}, [email, name, password, login]);
 
