@@ -5,7 +5,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
 import prismadb from '@/libs/prismadb';
-import { EmailAndPasswordRequiredException, InconrrectPasswordException, UserDoesntExistException } from '@/libs/exceptions';
+import { EmailAndPasswordRequiredException, IncorrectPasswordException, UserDoesntExistException } from '@/libs/exceptions';
 
 export const authOptions: AuthOptions = {
 	providers: [
@@ -48,7 +48,7 @@ export const authOptions: AuthOptions = {
 				const isCorrectPassword = await compare(credentials.password, user.hashedPassword);
 
 				if (!isCorrectPassword) {
-					throw new InconrrectPasswordException()
+					throw new IncorrectPasswordException()
 				}
 
 				return user;

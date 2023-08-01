@@ -4,10 +4,10 @@ export class EmailAndPasswordRequiredException extends Error {
 		this.name = 'EmailAndPasswordRequiredException';
 	}
 }
-export class InconrrectPasswordException extends Error {
-	constructor(message = 'Inconrrect Password') {
+export class IncorrectPasswordException extends Error {
+	constructor(message = 'Incorrect Password') {
 		super(message);
-		this.name = 'InconrrectPasswordException';
+		this.name = 'IncorrectPasswordException';
 	}
 }
 
