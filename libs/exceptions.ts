@@ -5,7 +5,7 @@ export class EmailAndPasswordRequiredException extends Error {
 	}
 }
 export class IncorrectPasswordException extends Error {
-	constructor(message = 'Incorrect Password') {
+	constructor(message = 'Incorrect Email or Password') {
 		super(message);
 		this.name = 'IncorrectPasswordException';
 	}
