@@ -139,10 +139,10 @@ const Auth = () => {
 	return (
 		<>
 			<Head>
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<meta name="description" content="This is Notflix, a demo app for watch some shorts, enjoy it!" />
-				<meta name="keywords" content="Notflix, Shorts" />
-				<meta name="author" content="Bernhard Silva" />
+				<meta name='viewport' content='width=device-width, initial-scale=1' />
+				<meta name='description' content='This is Notflix, a demo app for watch some shorts, enjoy it!' />
+				<meta name='keywords' content='Notflix, Shorts' />
+				<meta name='author' content='Bernhard Silva' />
 				<title>Notflix</title>
 			</Head>
 			<div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -152,9 +152,16 @@ const Auth = () => {
 					</nav>
 					<div className={`flex justify-center h-[80%]  ${loading && 'pointer-events-none opacity-75'}`}>
 						<div className='bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full'>
-							<h2 className='text-white text-4xl mb-8 font-semibold'>
-								{variant === 'login' ? 'Sign in' : 'Register'}
-							</h2>
+							<h2 className='text-white text-4xl mb-8 font-semibold'>{variant === 'login' ? 'Sign in' : 'Register'}</h2>
+							<div className='mb-2 text-sm text-slate-100 text-center'>
+								<p className='text-slate-300 mb-2'>You can use this email and password to sign in and test the app.</p>
+								<p>
+									Email: <b>test@gmail.com</b>
+								</p>
+								<p>
+									Password: <b>P4$$w0rd123</b>
+								</p>
+							</div>
 							{errorMessage && (
 								<div className='bg-orange-500 text-white py-2 px-4 rounded mb-3'>{`${errorMessage}.`}</div>
 							)}
@@ -210,8 +217,7 @@ const Auth = () => {
 								id={'auth-btn'}
 								label={variant === 'login' ? 'Login' : 'Register'}
 								className={`bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition 
-								${variant === 'login' ? isLogin() : isRegister()
-									}`}
+								${variant === 'login' ? isLogin() : isRegister()}`}
 								onClick={variant === 'login' ? login : register}
 								loading={loading}
 							/>
